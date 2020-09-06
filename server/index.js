@@ -4,7 +4,19 @@ const massive = require("massive")
 const { getAll } = require("./controller")
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+
+
+const { PORT = 3001, CONNECTION_STRING } = process.env;
+
+massive({
+        connectionString: CONNECTION_STRING,
+        ssl: { rejectUnauthorized: false }
+    })
+    .then(dbInstance => {
+        app.set("db", dbInstance);
+    })
+    .catch(err => console.log(err));
+
 
 app.get("/api/inventory", getAll)
 
