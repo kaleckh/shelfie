@@ -10,12 +10,29 @@ class App extends Component {
       input1: "kfe",
       input2: "",
       input3: "",
+      products: [
+        {
+          name: "burger",
+          price: 5,
+          image: "",
+        },
+        {
+          name: "fries",
+          price: 0,
+          image: "",
+        },
+        {
+          name: "drink",
+          price: 3,
+          image: "",
+        },
+      ],
     };
   }
   render() {
     return (
       <div>
-        <Dashboard />
+        <Dashboard inventoryList={this.state.products} />
         <Header />
         <Form />
         <input
@@ -48,13 +65,16 @@ class App extends Component {
           className="input3"
           type="text"
         />
-        <button onClick={() => {
-          this.setState({
-            input1: "",
-            input2: "",
-            input3: ""
-          })
-        }} className>
+        <button
+          onClick={() => {
+            this.setState({
+              input1: "",
+              input2: "",
+              input3: "",
+            });
+          }}
+          className
+        >
           {" "}
           Cancel{" "}
         </button>{" "}
