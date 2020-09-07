@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import "./App.css";
 import Form from "./components/Form/Form";
 import React, { Component } from "react";
+import axios from "axios";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -10,24 +11,15 @@ class App extends Component {
       input1: "kfe",
       input2: "",
       input3: "",
-      products: [
-        {
-          name: "burger",
-          price: 5,
-          image: "",
-        },
-        {
-          name: "fries",
-          price: 0,
-          image: "",
-        },
-        {
-          name: "drink",
-          price: 3,
-          image: "",
-        },
-      ],
+      products: [],
     };
+  }
+  componentDidMount() {
+    axios("http://localhost:3001/api/inventory").then(res => {
+      this.setState({
+        products: res.data
+      })
+    })
   }
   render() {
     return (

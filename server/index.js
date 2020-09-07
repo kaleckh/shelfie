@@ -2,8 +2,9 @@ require("dotenv").config()
 const express = require("express");
 const massive = require("massive")
 const { getAll } = require("./controller")
-
+const cors = require("cors")
 const app = express();
+app.use(cors())
 
 
 const { PORT = 3001, CONNECTION_STRING } = process.env;
