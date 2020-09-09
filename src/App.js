@@ -4,11 +4,12 @@ import "./App.css";
 import Form from "./components/Form/Form";
 import React, { Component } from "react";
 import axios from "axios";
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input1: "kfe",
+      input1: "",
       input2: "",
       input3: "",
       products: [],
@@ -70,7 +71,24 @@ class App extends Component {
           {" "}
           Cancel{" "}
         </button>{" "}
-        <button> Add to inventory </button>
+        <button onClick={() => {
+          var product = {
+            name: this.state.input1,
+            price: this.state.input2,
+            image: this.state.input3
+          }
+          axios.post("http://localhost:3001/api/product", product)
+          .then((response) => {
+            var products = this.state.products
+            products.push(response.data)
+            this.setState({
+              products: products,
+              input1: "",
+              input2: "",
+              input3: ""
+            })
+          })
+        }}>Add to inventory</button>
       </div>
     );
   }
