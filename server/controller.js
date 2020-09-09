@@ -22,10 +22,19 @@ let createProduct = (req, res) => {
             console.log(err)
         });
 }
-
+let deleteProduct = (req, res) => {
+    const dbInstance = req.app.get('db');
+    var id = parseInt(req.params.id)
+    dbInstance.delete_product([id])
+        .then(product => res.status(200).send(product))
+        .catch(err => {
+            res.status(500).send({ errorMessage: "Oops! Something went wrong. Our engineers have been informed!" });
+            console.log(err)
+        });
+}
 module.exports = {
     getAll,
-    createProduct
-
+    createProduct,
+    deleteProduct
 
 }
