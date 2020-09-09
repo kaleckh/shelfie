@@ -5,7 +5,8 @@ class Dashboard extends Component {
   render() {
     return <div> Dashboard 
         {this.props.inventoryList.map((product) => {
-            return <Product p={product}/>
+            return <Product deleteProduct={this.props.deleteProduct} p={product}/>
+
 
         })} </div>;
   }

@@ -25,7 +25,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Dashboard inventoryList={this.state.products} />
+        <Dashboard deleteProduct={ (productId) => {
+          this.setState({
+            products: this.state.products.filter(product => productId !== product.product_id)
+          })
+        }} inventoryList={this.state.products} />
         <Header />
         <Form />
         <input
