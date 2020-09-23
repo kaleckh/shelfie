@@ -1,7 +1,7 @@
 require("dotenv").config()
 const express = require("express");
 const massive = require("massive")
-const { getAll, createProduct, deleteProduct } = require("./controller")
+const { getAll, createProduct, deleteProduct, updateProduct } = require("./controller")
 const cors = require("cors")
 const app = express();
 app.use(cors())
@@ -23,6 +23,7 @@ massive({
 app.get("/api/inventory", getAll)
 app.post("/api/product", createProduct)
 app.delete("/api/product/:id", deleteProduct)
+app.put("/api/product/:id", updateProduct)
 
 
 
