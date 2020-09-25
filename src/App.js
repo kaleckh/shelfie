@@ -25,7 +25,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Dashboard deleteProduct={ (productId) => {
+        <Dashboard updateProduct={(product, id) => {
+           var objIndex = this.state.products.findIndex((product => product.product_id == id));
+            this.state.products[objIndex] = product
+            this.setState({
+              products: this.state.products
+            })
+        }}  deleteProduct={ (productId) => {
           this.setState({
             products: this.state.products.filter(product => productId !== product.product_id)
           })
