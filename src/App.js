@@ -16,26 +16,38 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    axios("http://localhost:3001/api/inventory").then(res => {
+    axios("http://localhost:3001/api/inventory").then((res) => {
       this.setState({
-        products: res.data
-      })
-    })
+        products: res.data,
+      });
+    });
   }
   render() {
     return (
       <div>
-        <Dashboard updateProduct={(product, id) => {
-           var objIndex = this.state.products.findIndex((product => product.product_id == id));
-            this.state.products[objIndex] = product
+        <Dashboard
+          updateProduct={(updatedProduct, id) => {
+            var result = this.state.products.map((product) => {
+              if (product.product_id == id) {
+                return { ...updatedProduct, product_id: id };
+              } else {
+                return product;
+              }
+            });
+
             this.setState({
-              products: this.state.products
-            })
-        }}  deleteProduct={ (productId) => {
-          this.setState({
-            products: this.state.products.filter(product => productId !== product.product_id)
-          })
-        }} inventoryList={this.state.products} />
+              products: result,
+            });
+          }}
+          deleteProduct={(productId) => {
+            this.setState({
+              products: this.state.products.filter(
+                (product) => productId !== product.product_id
+              ),
+            });
+          }}
+          inventoryList={this.state.products}
+        />
         <Header />
         <Form />
         <input
@@ -81,24 +93,29 @@ class App extends Component {
           {" "}
           Cancel{" "}
         </button>{" "}
-        <button onClick={() => {
-          var product = {
-            name: this.state.input1,
-            price: this.state.input2,
-            image: this.state.input3
-          }
-          axios.post("http://localhost:3001/api/product", product)
-          .then((response) => {
-            var products = this.state.products
-            products.push(response.data)
-            this.setState({
-              products: products,
-              input1: "",
-              input2: "",
-              input3: ""
-            })
-          })
-        }}>Add to inventory</button>
+        <button
+          onClick={() => {
+            var product = {
+              name: this.state.input1,
+              price: this.state.input2,
+              image: this.state.input3,
+            };
+            axios
+              .post("http://localhost:3001/api/product", product)
+              .then((response) => {
+                var products = this.state.products;
+                products.push(response.data);
+                this.setState({
+                  products: products,
+                  input1: "",
+                  input2: "",
+                  input3: "",
+                });
+              });
+          }}
+        >
+          Add to inventory
+        </button>
       </div>
     );
   }
